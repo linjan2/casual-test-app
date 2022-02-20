@@ -1,0 +1,12 @@
+diff --git a/casual/middleware/makefile.cmk b/casual/middleware/makefile.cmk
+index f3690c0a..3d61ddd9 100644
+--- a/casual/middleware/makefile.cmk
++++ b/casual/middleware/makefile.cmk
+@@ -20,7 +20,6 @@ make.Build( 'http/makefile.cmk')
+ make.Build( 'gateway/makefile.cmk')
+ 
+ # examples 
+-make.Build( 'example/makefile.cmk')
+ 
+ # admin cli
+ make.Build( 'tools/makefile.cli.cmk')

@@ -1,0 +1,24 @@
+domain:
+  name: simpapp
+  servers: 
+    - path: ${CASUAL_DOMAIN_HOME}/bin/simpserv
+      instances: 1
+      note: Simple application
+
+      # forward from queueB1 to service 'casual/example/echo' and write reply to queueB2
+    # - path: casual-queue-forward-service
+    #   instances: 1
+    #   arguments: [--forward, queueB1, casual/example/echo, queueB2]
+  # gateway:
+  #   listeners:
+  #     - address: 0.0.0.0:7777
+  #   connections:
+  #     - address: domain2:7770
+  #       services: [casual/example/echo]
+  # queue:
+  #   groups:
+  #     - name: domain-B
+  #       queuebase: queue/domainB.db
+  #       queues:
+  #         - name: queueB1
+  #         - name: queueB2

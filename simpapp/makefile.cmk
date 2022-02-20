@@ -1,0 +1,43 @@
+import casual.make.api as make
+import casual.middleware.make.api as dsl
+
+make.IncludePaths([
+    dsl.paths().install + '/include',
+    'inc' ] + 
+    make.optional_include_paths()
+    )
+
+make.LibraryPaths([
+    dsl.paths().install + '/lib',
+    'bin' ] +
+    make.optional_library_paths()
+    )
+
+# install_bin = []
+
+target = dsl.LinkServer( 'bin/simpserv',
+    [ 
+        make.Compile( 'src/simpserv.cpp')
+    ],
+    [ 
+        'casual-common',
+        'casual-xatmi'
+    ],
+    'server.yaml')
+
+# install_bin.append( target)
+
+target = make.LinkExecutable('bin/simpcl',
+    [ 
+        make.Compile('src/simpcl.cpp')
+    ],
+    [
+        'casual-common',
+        'casual-xatmi'
+    ])
+
+# install_bin.append(target)
+
+# make.Install(install_bin, '$(CASUAL_DOMAIN_HOME)/bin')
+# make.Install(['domain.yaml'], '$(CASUAL_DOMAIN_HOME)')
+# make.Install(['domain.env'], '$(CASUAL_DOMAIN_HOME)')
