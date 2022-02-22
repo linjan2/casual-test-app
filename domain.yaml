@@ -1,6 +1,0 @@
-domain:
-  name: simpapp
-  servers: 
-    - path: simpapp
-      instances: 1
-      note: Simple application

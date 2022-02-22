@@ -1,9 +1,9 @@
 domain:
   name: simpapp
   servers: 
-    - path: ${CASUAL_DOMAIN_HOME}/bin/simpserv
+    - path: ${CASUAL_DOMAIN_HOME}/simpserv
       instances: 1
-      note: Simple application
+      note: Simple server
 
       # forward from queueB1 to service 'casual/example/echo' and write reply to queueB2
     # - path: casual-queue-forward-service

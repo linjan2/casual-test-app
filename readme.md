@@ -95,8 +95,6 @@ pushd simpapp
 # server
 casual-build-server --output bin/simpserv \
   --build-directives src/simpserv.cpp \
-  --service simpserv_toupper \
-  --service simpserv_echo \
   --server-definition server.yaml
 
 # client

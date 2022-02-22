@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <xatmi.h>
+#include <casual/buffer/string.h>
 
 #ifdef __cplusplus
 extern "C"
@@ -25,14 +26,14 @@ int main2(int argc, char **argv)
 
     size_t sendlen = strlen(argv[1]);
     char *sendbuf;
-    if (NULL == (sendbuf = tpalloc("STRING", NULL, sendlen+1)))
+    if (NULL == (sendbuf = tpalloc(CASUAL_STRING, NULL, sendlen+1)))
     {
         printf("L%d: %s", __LINE__, tperrnostring(tperrno));
         // tpterm();
         return -1;
     }
     char *recvbuf;
-    if (NULL == (recvbuf = tpalloc("STRING", NULL, sendlen+1)))
+    if (NULL == (recvbuf = tpalloc(CASUAL_STRING, NULL, sendlen+1)))
     {
         printf("L%d: %s", __LINE__, tperrnostring(tperrno));
         // tpterm();
@@ -41,7 +42,7 @@ int main2(int argc, char **argv)
 
     strncpy(sendbuf, argv[1], sendlen);
     long recvlen = 0;
-    int ret = tpcall("simpserv_toupper", sendbuf, sendlen, &recvbuf, &recvlen, 0);
+    int ret = tpcall("toupper", sendbuf, sendlen, &recvbuf, &recvlen, 0);
     if (-1 == ret)
     {
         printf("L%d: %s", __LINE__, tperrnostring(tperrno));

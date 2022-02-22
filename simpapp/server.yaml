@@ -1,8 +1,8 @@
 server:
   services:
-    - name: simpserv/toupper
+    - name: toupper
       function: simpserv_toupper
       transaction: none
-    - name: simpserv/echo
+    - name: echo
       function: simpserv_echo
       transaction: join
