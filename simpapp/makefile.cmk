@@ -20,8 +20,8 @@ target = dsl.LinkServer( 'bin/simpserv',
         make.Compile( 'src/simpserv.cpp')
     ],
     [ 
-        'casual-common',
-        'casual-xatmi'
+        'casual-xatmi',
+        'casual-buffer'
     ],
     'server.yaml')
 
@@ -32,8 +32,8 @@ target = make.LinkExecutable('bin/simpcl',
         make.Compile('src/simpcl.cpp')
     ],
     [
-        'casual-common',
-        'casual-xatmi'
+        'casual-xatmi',
+        'casual-buffer'
     ])
 
 # install_bin.append(target)

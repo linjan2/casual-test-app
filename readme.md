@@ -49,7 +49,7 @@ git commit -m "[${REMOTE}] updated subtree from $(git show-ref ${REMOTE}/${REF})
 ```sh
 sudo dnf install gcc-c++ libuuid-devel libcurl-devel sqlite-devel
 
-DIR=${PWD}
+DIR=$(git rev-parse --show-toplevel)  # repository root path
 export CASUAL_BUILD_HOME=${DIR}/casual
 export CASUAL_THIRDPARTY=${DIR}/casual-thirdparty
 export CASUAL_MAKE_HOME=${DIR}/casual-make
@@ -72,11 +72,16 @@ popd
 
 This builds `simpapp/bin/simpserv` and `simpapp/bin/simpcl`.
 
-Set environment variables for building. 
+Set environment variables for building with an installed instance of Casual.
 
 ```sh
+DIR=$(git rev-parse --show-toplevel)  # repository root path
+export CASUAL_HOME=${DIR}/installdir
 export PATH=${CASUAL_HOME}/bin:${PATH}
 export LD_LIBRARY_PATH=${CASUAL_HOME}/lib
+# casual-make
+export PYTHONPATH=${DIR}/casual/make:${DIR}/casual-make
+export PATH=${DIR}/casual-make/source:${PATH}
 ```
 
 Build from `simpapp/makefile.cmk`.
@@ -93,14 +98,16 @@ Or, build with CLI. (The client executable must specify an entrypoint different 
 ```sh
 pushd simpapp
 # server
-casual-build-server --output bin/simpserv \
-  --build-directives src/simpserv.cpp \
-  --server-definition server.yaml
+casual-build-server \
+  --server-definition server.yaml \
+  --no-defaults \
+  --build-directives '-o bin/simpserv' src/simpserv.cpp -I${CASUAL_HOME}/include -L${CASUAL_HOME}/lib -lcasual-xatmi -lcasual-buffer
 
 # client
-casual-build-executable --output bin/simpcl \
-  --build-directives src/simpcl2.cpp \
-  --definition executable.yaml
+casual-build-executable \
+  --definition executable.yaml \
+  --no-defaults \
+  --build-directives '-o bin/simpcl' src/simpcl2.cpp -I${CASUAL_HOME}/include -L${CASUAL_HOME}/lib -lcasual-xatmi -lcasual-buffer
 popd
 ```
 
@@ -147,5 +154,6 @@ Inside the container, Start the domain with the server and then run client.
 ```sh
 casual domain --boot ${CASUAL_DOMAIN_HOME}/domain.yaml
 ${CASUAL_DOMAIN_HOME}/bin/simpcl hello
+cat /tmp/casual.log  # view logs
 casual domain --shutdown
 ```
